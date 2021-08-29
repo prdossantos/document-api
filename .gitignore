@@ -354,3 +354,5 @@ coverage/
 data
 
 package-lock.json
+
+.codacy-coverage/

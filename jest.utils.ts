@@ -18,9 +18,9 @@ export const expects = {
     toBeInJson(received: any, attr: string, value: any) {
         let pass = false;
         if (received.data && attr !== "success") {
-            pass = typeof received.data[attr] === "string" ? received.data[attr].indexOf(value) > -1 : received.data[attr] == value;
+            pass = typeof received.data[attr] === "string" ? received.data[attr].indexOf(value) > -1 : received.data[attr] === value;
         } else {
-            pass = typeof received[attr] === "string" ? received[attr].indexOf(value) > -1 : received[attr] == value;
+            pass = typeof received[attr] === "string" ? received[attr].indexOf(value) > -1 : received[attr] === value;
         }
         if (pass) {
             return {

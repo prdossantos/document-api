@@ -11,7 +11,7 @@ const pino = require("pino-http")();
 const app = express();
 
 require("dotenv").config({
-    path: `.env`,
+    path: ".env",
 });
 
 const port = process.env.NODE_PORT || "8080";
@@ -23,13 +23,13 @@ app.use(compression());
 app.use(cors());
 
 app.listen(port, () => {
-    logger.info(`app listening on port ${port}`)
+    logger.info(`app listening on port ${port}`);
 
     mdbConnection().then( (connection) => {
-        logger.info(`MongoDB connected`)
-    }).catch( e => {
-        logger.error(`Mongodb connection error: ${e.message}`)
-    })
+        logger.info(`MongoDB connected`);
+    }).catch( ( e ) => {
+        logger.error(`Mongodb connection error: ${e.message}`);
+    });
 })
 app.use((req, res, next) => {
 

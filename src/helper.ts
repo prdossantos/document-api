@@ -1,4 +1,4 @@
-import { ResponseError, ResponseSuccess } from "./models/responseModel"
+import { ResponseError, ResponseSuccess } from "./models/responseModel";
 
 /**
  * List of the status of a purchase
@@ -15,7 +15,7 @@ export const responseError = ( message: string ) => {
     const response: ResponseError = {
         success: false,
         error: message
-    }
+    };
 
     return response;
 } 
@@ -35,8 +35,9 @@ export const responseSuccess = <T>( data: T ) => {
 } 
 
 export const unmaskDocument = ( value: string ) => {
-    if( !value )
+    if( !value ) {
         return value;
+    }
 
     return value.replace(/\D+/g,"");
 }
@@ -57,12 +58,12 @@ export const validDocument = ( value: string ) => {
     let document: any = value;
 
     for( let i = 1; document.length > i; i++ ) {
-        if( document[i - 1] != document[i] ) {
+        if( document[i - 1] !== document[i] ) {
             isValid = true;   
         }
     } 
 
-    if ( isValid == false ) {
+    if ( isValid === false ) {
         return false; 
     }
 
@@ -74,7 +75,7 @@ export const validDocument = ( value: string ) => {
         
         v1 = ((v1 * 10) % 11);
         
-        if (v1 == 10) {
+        if (v1 === 10) {
             v1 = 0; 
         }
         
@@ -88,11 +89,11 @@ export const validDocument = ( value: string ) => {
         
         v2 = ((v2 * 10) % 11);
         
-        if (v2 == 10) {
+        if (v2 === 10) {
             v2 = 0; 
         }
         
-        if (v2 != document[10]) {
+        if (v2 !== document[10]) {
             return false; 
         } else {   
             return true; 
@@ -115,7 +116,7 @@ export const validDocument = ( value: string ) => {
             v1 = (11 - v1); 
         } 
         
-        if (v1 != document[12]) {  
+        if (v1 !== document[12]) {  
             return false; 
         } 
         
@@ -135,7 +136,7 @@ export const validDocument = ( value: string ) => {
             v2 = (11 - v2); 
         } 
         
-        if (v2 != document[13]) {   
+        if (v2 !== document[13]) {   
             return false; 
         } else {  
             return true; 

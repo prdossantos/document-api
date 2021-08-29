@@ -5,7 +5,7 @@ import { unmaskDocument } from "../helper";
 import DocumentModel from "../models/DocumentModel";
 const mockingoose = require("mockingoose");
 
-jest.mock("../mongo.connection", () =>( { isDBConnected: jest.fn(() => () => true) } ));
+jest.mock("../mongo.connection", () => ( { isDBConnected: jest.fn(() => () => true) } ));
 
 expect.extend(expects);
 
@@ -33,7 +33,7 @@ describe("test DocumentController::create", () => {
         const res = mockResponse();
         req.body = {
             document: "12345678901"
-        }
+        };
 
         mockingoose(DocumentModel).toReturn({}, "find");
 
@@ -71,7 +71,7 @@ describe("test DocumentController::getDocuments", () => {
 
         const req = mockRequest();
         const res = mockResponse();
-        req.body = {}
+        req.body = {};
 
         mockingoose(DocumentModel).toReturn([], "find");
 
@@ -110,7 +110,7 @@ describe("test DocumentController::update", () => {
 
         const req = mockRequest();
         const res = mockResponse();
-        req.params = {document: "795.687.370-30"}
+        req.params = {document: "795.687.370-30"};
 
 
         mockingoose(DocumentModel).toReturn({}, "findOne");

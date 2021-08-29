@@ -7,14 +7,14 @@ const mdbConnection = (): Promise<Mongoose> => {
 
     mongoose.connection.on("connecting", () => { 
         logger.info("MongoDB is trying to connect");
-    })
+    });
 
     return connection;
-}
+};
 
 export const isDBConnected = () => {
-    const isConnected = mongoose.connections.map( conn => conn.readyState );
-    return isConnected.length ? isConnected[0] == 1 : false;
+    const isConnected = mongoose.connections.map( ( conn ) => conn.readyState );
+    return isConnected.length ? isConnected[0] === 1 : false;
 };
 
 export default mdbConnection;

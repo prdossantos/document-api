@@ -15,17 +15,19 @@ class DocumentController {
      */
     async create( req: express.Request, res: express.Response ) {
         
-        let {document} = req.body
-        document = unmaskDocument(document)
+        let {document} = req.body;
+        document = unmaskDocument(document);
 
         const doc = new DocumentModel({document});
         const hasErrors = doc.validateSync();
 
-        if( hasErrors )        
+        if( hasErrors ) {
             return res.status(400).json(responseError(hasErrors.message));
+        }
 
-        if( !isDBConnected() )
+        if( !isDBConnected() ) {
             return res.status(400).json(responseError("Your DB isn\"t started, but your request is ok!"));
+        }
 
         try {
             const saved = await doc.save();
@@ -48,21 +50,23 @@ class DocumentController {
     async update( req: express.Request, res: express.Response ) {
         
         let {document} = req.params;
-        document = unmaskDocument(document)
+        document = unmaskDocument(document);
 
         let doc: any = new DocumentModel({document});
         const hasErrors = doc.validateSync();
 
-        if( hasErrors )        
+        if( hasErrors ) {     
             return res.status(400).json(responseError(hasErrors.message));
+        }
 
-        if( !isDBConnected() )
+        if( !isDBConnected() ) {
             return res.status(400).json(responseError("Your DB isn\"t started, but your request is ok!"));
+        }
 
         try {
-            doc = await DocumentModel.findOne({document})
+            doc = await DocumentModel.findOne({document});
             await DocumentModel.updateOne({_id: doc._id}, {isBlacklist: !doc.isBlacklist});
-            doc.isBlacklist = !doc.isBlacklist
+            doc.isBlacklist = !doc.isBlacklist;
         } catch( e ) {
             logger.error(e.message);
             return res.status(400).json(responseError(e.message));
@@ -73,7 +77,7 @@ class DocumentController {
 
     async getDocuments(req: express.Request, res: express.Response ) {
         
-        const { document, sort, isBlacklist }: any = req.query
+        const { document, sort, isBlacklist }: any = req.query;
         const aggregate: any = [];
         let query: any = { $and: [{createdAt: {$type: "date"} }] };
 
