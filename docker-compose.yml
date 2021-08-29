@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  nodejs-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "npm install; nodemon index.ts --color=always"
+    ports:
+      - "8084:8084"
+    volumes:
+      - ./:/usr/src/app
+    container_name: nodejs-api
+    networks:
+      - app
+    links:
+      - mongo-db
+  mongo-db:
+    image: mongo:latest
+    command: mongod --port 27019
+    ports:
+      - "27019:27019"
+    container_name: mongo-db
+    volumes:
+      - ./data/:/data/db
+    networks:
+      - app
+networks:
+    app:
+        driver: bridge

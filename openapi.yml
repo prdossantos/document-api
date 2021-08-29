@@ -1,0 +1,151 @@
+openapi: 3.0.0
+info:
+  version: 1.2.2
+  title: API Gerenciamento de CPF/CNPJ
+  description: 'Aplicação de validação de CPF/CNPJ'
+paths:
+  /:
+    get:
+      summary: 'Verifique o status da API'
+      operationId: getVersion
+      tags: 
+        - General
+      responses:
+        '200':
+          description: Quando retornar sucesso será exibida a versão e nome da api.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
+                
+  /create:
+    post:
+      summary: 'Cadastrar um novo documento'
+      operationId: postCreate
+      tags:
+        - Documento
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+                
+      responses:
+        '200':
+          description: Retorna o documento criado em caso de sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentResponse'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
+
+  /documents:
+    get:
+      summary: 'Lista de todos os documentos cadastrados'
+      operationId: getDocuments
+      parameters: 
+        - in: query
+          description: CPF/CNPJ
+          required: false
+          name: document
+          schema:
+            type: string
+        - in: query
+          description: Documentos que estão na blacklist 
+          required: false
+          name: isBlacklist
+          schema:
+            type: boolean
+        - in: query
+          description: Ordenar resultados por document, crescente ou decrescente
+          required: false
+          name: sort
+          schema:
+            enum: ["asc", "desc"]
+            
+      tags:
+        - Documento
+        
+      responses:
+        '200':
+          description: Retorna a lista de documentos cadastrados até o momento.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    type: array
+                    default: []
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'  
+
+                
+components:
+
+  schemas:
+    Document:
+      type: object
+      required:
+        - document
+      properties:
+        document:
+          type: string     
+    
+    DocumentResponse:
+      type: object
+      required:
+        - document
+        - _id
+        - isBkacList
+      properties:
+        document:
+          type: string
+        _id:
+          type: string
+        isBlacklist:
+          type: boolean
+          
+    ResponseSuccess:
+      type: object
+      required:
+        - data
+        - success
+      properties:
+        data:
+          nullable: true
+          oneOf:
+            - type: object
+            - type: array
+        success:
+          description: 'Retorna "true" para as requisições de sucesso.'
+          type: boolean
+            
+    ResponseErrors:
+      type: object
+      required:
+        - error
+        - success
+      properties:
+        error:
+          type: string
+        success:
+          description: 'Retorna "false" para as requisições com erro.'
+          default: false
+          type: boolean
