@@ -19,8 +19,9 @@ routes.get("/", async (req, res, next) => {
     });
 });
 
-routes.post( "/document",           DocumentController.create);
-routes.put(  "/document/:document",  DocumentController.update);
-routes.get(  "/documents",          DocumentController.getDocuments);
+routes.post(    "/document",               DocumentController.create);
+routes.put(     "/document/:document",     DocumentController.update);
+routes.delete(  "/document/:document",     DocumentController.delete);
+routes.get(     "/documents",              DocumentController.getDocuments);
 
 export default routes;

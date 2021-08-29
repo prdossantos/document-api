@@ -52,12 +52,7 @@ class DocumentController {
         let {document} = req.params;
         document = unmaskDocument(document);
 
-        let doc: any = new DocumentModel({document});
-        const hasErrors = doc.validateSync();
-
-        if( hasErrors ) {     
-            return res.status(400).json(responseError(hasErrors.message));
-        }
+        let doc: any;
 
         if( !isDBConnected() ) {
             return res.status(400).json(responseError("Your DB isn\"t started, but your request is ok!"));
@@ -75,6 +70,36 @@ class DocumentController {
         return res.json(responseSuccess<Document>(doc));
     }
 
+    /**
+     * Delete a document
+     * 
+     * @param req 
+     * @param res 
+     * @returns 
+     */
+    async delete( req: express.Request, res: express.Response ) {
+        
+        let {document} = req.params;
+        document = unmaskDocument(document);
+
+        let doc: any;
+        
+        if( !isDBConnected() ) {
+            return res.status(400).json(responseError("Your DB isn\"t started, but your request is ok!"));
+        }
+
+        try {
+            doc = await DocumentModel.findOne({document});
+            await DocumentModel.deleteOne({_id: doc._id});
+            doc.deletedAt = new Date();
+        } catch( e ) {
+            logger.error(e.message);
+            return res.status(400).json(responseError(e.message));
+        }
+
+        return res.json(responseSuccess<Document>(doc));
+    }
+
     async getDocuments(req: express.Request, res: express.Response ) {
         
         const { document, sort, isBlacklist }: any = req.query;
@@ -84,9 +109,10 @@ class DocumentController {
         if( document ) {
             query["$and"].push({"documents.document": {$eq: unmaskDocument(document)}});
         }
-        if( typeof isBlacklist === "boolean" ) {
-			query["$and"].push({"isBlacklist": {$eq: isBlacklist}});
+        if( ["true", "false"].indexOf(isBlacklist) > -1 ) {
+			query["$and"].push({"isBlacklist": {$eq: isBlacklist === "true"}});
         }
+
         aggregate.push({ $match: query});
 
         const docs: any = await DocumentModel.aggregate(aggregate).sort({"document": sort === "asc" ? 1 : -1});

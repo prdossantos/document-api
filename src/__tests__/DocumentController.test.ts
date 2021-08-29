@@ -125,3 +125,25 @@ describe("test DocumentController::update", () => {
     });
 
 });
+
+describe("test DocumentController::delete", () => {
+
+    it("case 2. deletes a document", async () => {
+
+        const req = mockRequest();
+        const res = mockResponse();
+        req.params = {document: "795.687.370-30"};
+
+
+        mockingoose(DocumentModel).toReturn({}, "findOne");
+        mockingoose(DocumentModel).toReturn({}, "deleteOne");
+
+        await DocumentController.delete(req as Request, res as Response);
+
+        expect(res.json).toHaveBeenCalledWith(
+            //@ts-ignore
+            expect.toBeInJson("success", true)
+        );
+    });
+
+});
