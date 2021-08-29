@@ -1,4 +1,5 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/96e7ae2f61944b21b7278414a543523b)](https://www.codacy.com/gh/prdossantos/document-validation-api/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prdossantos/document-validation-api&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/96e7ae2f61944b21b7278414a543523b)](https://www.codacy.com/gh/prdossantos/document-validation-api/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prdossantos/document-validation-api&amp;utm_campaign=Badge_Coverage)
 
 # Api Gerenciamento de Documento
 
