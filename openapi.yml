@@ -1,12 +1,12 @@
 openapi: 3.0.0
 info:
-  version: 1.2.2
+  version: 1.0.0
   title: API Gerenciamento de CPF/CNPJ
   description: 'Aplicação de validação de CPF/CNPJ'
 paths:
   /:
     get:
-      summary: 'Verifique o status da API'
+      summary: 'Verifique o status da API, uptime e número de requisições'
       operationId: getVersion
       tags: 
         - General
@@ -51,7 +51,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseErrors'
-
+  /document/{document}:
+    put:
+      summary: 'Inclui ou remove o documento da blacklist'
+      operationId: putDocument
+      tags:
+        - Documento
+      parameters: 
+        - in: path
+          description: CPF/CNPJ
+          required: true
+          name: document
+          schema:
+            type: string
+                
+      responses:
+        '200':
+          description: Retorna o documento atualizado em caso de sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DocumentResponse'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
   /documents:
     get:
       summary: 'Lista de todos os documentos cadastrados'
@@ -66,7 +94,7 @@ paths:
         - in: query
           description: Documentos que estão na blacklist 
           required: false
-          name: isBlacklist
+          name: isBlackList
           schema:
             type: boolean
         - in: query
@@ -119,7 +147,7 @@ components:
           type: string
         _id:
           type: string
-        isBlacklist:
+        isBlackList:
           type: boolean
           
     ResponseSuccess:
