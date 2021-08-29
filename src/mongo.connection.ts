@@ -14,7 +14,7 @@ const mdbConnection = (): Promise<Mongoose> => {
 
 export const isDBConnected = () => {
     const isConnected = mongoose.connections.map( conn => conn.readyState );
-    return isConnected.length ? isConnected[0] == 1 : false
+    return isConnected.length ? isConnected[0] == 1 : false;
 };
 
 export default mdbConnection;

@@ -1,5 +1,5 @@
 module.exports = {
-    preset: 'ts-jest',
+    preset: "ts-jest",
     clearMocks: true,
     collectCoverage: true,
     coverageDirectory: "coverage",

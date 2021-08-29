@@ -6,21 +6,21 @@ import routes from "./src/routes";
 import mdbConnection from "./src/mongo.connection";
 import { logger, responseError } from "./src/helper";
 import MonitorModel from "./src/models/MonitorModel";
-const pino = require("pino-http")()
+const pino = require("pino-http")();
 
 const app = express();
 
 require("dotenv").config({
     path: `.env`,
-})
+});
 
 const port = process.env.NODE_PORT || "8080";
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-app.use(compression())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(compression());
 
-app.use(cors())
+app.use(cors());
 
 app.listen(port, () => {
     logger.info(`app listening on port ${port}`)
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
             "remoteAddress": req.ips,
             "path": req.path
         }
-    })
+    });
 
     next();
 });

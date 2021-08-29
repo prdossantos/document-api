@@ -1,26 +1,26 @@
 export const mockRequest = () => {
-    const req: any = {}
-    req.body = jest.fn().mockReturnValue(req)
-    req.params = jest.fn().mockReturnValue(req)
-    req.query = jest.fn().mockReturnValue(req)
-    return req
+    const req: any = {};
+    req.body = jest.fn().mockReturnValue(req);
+    req.params = jest.fn().mockReturnValue(req);
+    req.query = jest.fn().mockReturnValue(req);
+    return req;
 }
 
 export const mockResponse = () => {
-    const res: any = {}
-    res.send = jest.fn().mockReturnValue(res)
-    res.status = jest.fn().mockReturnValue(res)
-    res.json = jest.fn().mockReturnValue(res)
-    return res
+    const res: any = {};
+    res.send = jest.fn().mockReturnValue(res);
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
 }
 
 export const expects = {
     toBeInJson(received: any, attr: string, value: any) {
-        let pass = false
-        if (received.data && attr !== 'success') {
-            pass = typeof received.data[attr] == "string" ? received.data[attr].indexOf(value) > -1 : received.data[attr] == value;
+        let pass = false;
+        if (received.data && attr !== "success") {
+            pass = typeof received.data[attr] === "string" ? received.data[attr].indexOf(value) > -1 : received.data[attr] == value;
         } else {
-            pass = typeof received[attr] == "string" ? received[attr].indexOf(value) > -1 : received[attr] == value;
+            pass = typeof received[attr] === "string" ? received[attr].indexOf(value) > -1 : received[attr] == value;
         }
         if (pass) {
             return {

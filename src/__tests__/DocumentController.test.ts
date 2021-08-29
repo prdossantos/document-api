@@ -15,7 +15,7 @@ describe("test DocumentController::create", () => {
 
         const req = mockRequest();
         const res = mockResponse();
-        req.body = {}
+        req.body = {};
 
         mockingoose(DocumentModel).toReturn({}, "find");
 
