@@ -26,7 +26,7 @@ app.listen(port, () => {
     logger.info(`app listening on port ${port}`);
 
     mdbConnection().then( (connection) => {
-        logger.info(`MongoDB connected`);
+        logger.info("MongoDB connected");
     }).catch( ( e ) => {
         logger.error(`Mongodb connection error: ${e.message}`);
     });
